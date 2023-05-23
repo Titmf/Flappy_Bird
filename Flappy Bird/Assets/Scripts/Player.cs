@@ -43,4 +43,27 @@ public class Player : MonoBehaviour
 
         _spriteRenderer.sprite = _sprites[_spriteIndex];
     }
+
+    private void OnEnable()
+    {
+        Vector3 position = transform.position;
+        position.y = 0f;
+        transform.position = position;
+        _direction = Vector3.zero;
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Obstacle")
+        {
+            FindObjectOfType<GameUI>().GameOver();
+        }
+        else
+        {
+            if (col.gameObject.tag == "Scoring")
+            {
+                FindObjectOfType<GameUI>().IncreaseScore();
+            }
+        }
+    }
 }
